@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a2463">
+  <title>EduAsistencia · Control Académico</title>
+
+  <!-- Tipografía e íconos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Menú lateral (computadora / tablet horizontal) -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <h1>EduAsistencia</h1>
+          <small>Control académico</small>
+        </div>
+      </div>
+      <nav class="nav" id="nav">
+        <a href="#inicio" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+        <a href="#cursos" data-view="cursos"><i class="fa-solid fa-layer-group"></i><span>Cursos y clases</span></a>
+        <a href="#estudiantes" data-view="estudiantes"><i class="fa-solid fa-user-graduate"></i><span>Estudiantes</span></a>
+        <a href="#asistencia" data-view="asistencia"><i class="fa-solid fa-clipboard-check"></i><span>Asistencia</span></a>
+        <a href="#notas" data-view="notas"><i class="fa-solid fa-star"></i><span>Notas</span></a>
+      </nav>
+      <div class="sidebar-foot">
+        <div id="mode-side"></div>
+        <p>Año lectivo <strong id="anio-side"></strong></p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h2 id="page-title">Inicio</h2>
+          <p id="page-date"></p>
+        </div>
+        <span id="mode-badge" class="mode-badge"></span>
+      </header>
+      <section id="view" class="view"></section>
+    </main>
+
+    <!-- Navegación inferior (celulares) -->
+    <nav class="bottom-nav" id="bottom-nav">
+      <a href="#inicio" data-view="inicio"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+      <a href="#cursos" data-view="cursos"><i class="fa-solid fa-layer-group"></i><span>Cursos</span></a>
+      <a href="#estudiantes" data-view="estudiantes"><i class="fa-solid fa-user-graduate"></i><span>Alumnos</span></a>
+      <a href="#asistencia" data-view="asistencia"><i class="fa-solid fa-clipboard-check"></i><span>Asistencia</span></a>
+      <a href="#notas" data-view="notas"><i class="fa-solid fa-star"></i><span>Notas</span></a>
+    </nav>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toast-root"></div>
+
+  <div id="loader" class="loader">
+    <div class="loader-box">
+      <div class="brand-logo big"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div class="spinner"></div>
+      <p id="loader-msg">Cargando datos…</p>
+    </div>
+  </div>
+
+  <!-- Registro de errores de carga (para el diagnóstico de conexión) -->
+  <script>
+    window.__erroresScript = [];
+    window.addEventListener('error', function (e) {
+      var t = e.target;
+      if (t && t.tagName === 'SCRIPT' && t.src) window.__erroresScript.push({ archivo: t.src, msg: 'No se pudo descargar el archivo', linea: 0 });
+      else if (e.filename) window.__erroresScript.push({ archivo: e.filename, msg: e.message, linea: e.lineno });
+    }, true);
+  </script>
+
+  <!-- Firebase (SDK compat: funciona también abriendo el archivo directamente) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <!-- Gráficos -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+  <!-- Aplicación -->
+  <script>window.__errAntesCfg = window.__erroresScript.length;</script>
+  <script src="js/firebase-config.js"></script>
+  <script>
+    window.__errCfg = window.__erroresScript.slice(window.__errAntesCfg)[0] || null;
+    window.__cfgLeido = (typeof firebaseConfig !== 'undefined');
+  </script>
+  <script src="js/demo-data.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/vista-inicio.js"></script>
+  <script src="js/vista-cursos.js"></script>
+  <script src="js/vista-estudiantes.js"></script>
+  <script src="js/vista-asistencia.js"></script>
+  <script src="js/vista-notas.js"></script>
+  <script>iniciarApp();</script>
+</body>
+</html>
